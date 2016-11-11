@@ -1,4 +1,17 @@
-package application;
+/*Copyright 2016 stoneriver
+ *
+ *Licensed under the Apache License, Version 2.0 (the "License");
+ *you may not use this file except in compliance with the License.
+ *You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *Unless required by applicable law or agreed to in writing, software
+ *distributed under the License is distributed on an "AS IS" BASIS,
+ *WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *See the License for the specific language governing permissions and
+ *limitations under the License.
+ */package application;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,38 +42,15 @@ public class Plan {
 			String num = String.valueOf(i);
 			String eventName;
 			int start;
-			int end;
-			int aPoint;
-			int bPoint;
-			String timing;
-			int volume;
 			if (config.getProperty("event" + num + "Name").equals("null")) {
 				eventName = "無音";
 				start = 0;
-				end = 0;
-				aPoint = 0;
-				bPoint = 0;
-				volume = 0;
 			} else {
 				eventName = config.getProperty("event" + num + "Name");
 				start = Integer.parseInt(config.getProperty("event" + num + "Start"));
-				end = Integer.parseInt(config.getProperty("event" + num + "End"));
-				aPoint = Integer.parseInt(config.getProperty("event" + num + "APoint"));
-				bPoint = Integer.parseInt(config.getProperty("event" + num + "BPoint"));
-				volume = Integer.parseInt(config.getProperty("event" + num + "Volume"));
 			}
-			timing = config.getProperty("event" + num + "Timing");
-			events[i] = new Event(i, eventName, start, end, aPoint, bPoint, timing, volume);
+			events[i] = new Event(i, eventName, start, eventName);
 		}
-	}
-	
-	/**
-	 * eventを取得します。
-	 * 
-	 * @return event
-	 */
-	public Event getEvent(int eventNum) {
-		return events[eventNum];
 	}
 	
 	/**

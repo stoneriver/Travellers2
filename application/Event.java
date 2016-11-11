@@ -1,23 +1,25 @@
 package application;
 
+import java.io.File;
+import java.net.MalformedURLException;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 public class Event {
 	
-	private final int number;
+	private final int num;
 	private final String eventName;
 	private final int start;
-	private final int end;
-	private final int aPoint;
-	private final int bPoint;
-	private final String timing;
-	private final int volume;
+	private final MediaPlayer player;
 	
 	/**
-	 * numberを取得します。
+	 * numを取得します。
 	 * 
-	 * @return number
+	 * @return num
 	 */
-	public int getNumber() {
-		return number;
+	public int getNum() {
+		return num;
 	}
 	
 	/**
@@ -41,66 +43,27 @@ public class Event {
 	}
 	
 	/**
-	 * endを取得します。
-	 * 無音イベントの場合は、0を返します。
+	 * playerを取得します。
 	 * 
-	 * @return end
+	 * @return player
 	 */
-	public int getEnd() {
-		return end;
+	public MediaPlayer getPlayer() {
+		return player;
 	}
-	
-	/**
-	 * aPointを取得します。
-	 * 無音イベントの場合は、0を返します。
-	 * 
-	 * @return aPoint
-	 */
-	public int getAPoint() {
-		return aPoint;
-	}
-	
-	/**
-	 * bPointを取得します。
-	 * 無音イベントの場合は、0を返します。
-	 * 
-	 * @return bPoint
-	 */
-	public int getBPoint() {
-		return bPoint;
-	}
-	
-	/**
-	 * timingを取得します。
-	 * 
-	 * @return timing
-	 */
-	public String getTiming() {
-		return timing;
-	}
-	
-	/**
-	 * volumeを取得します。
-	 * 
-	 * @return volume
-	 */
-	public int getVolume() {
-		return volume;
-	}
-	
-	public Event(int number, String eventName, int start, int end, int aPoint, int bPoint, String timing, int volume) {
-		this.number = number;
-		if (!eventName.startsWith("null")) {
+
+	public Event(int number, String eventName, int start, String mediaSource) throws MalformedURLException {
+		this.num = number;
+		if (!eventName.startsWith("無音")) {
 			this.eventName = eventName;
+			this.start = start;
+			File file = new File(mediaSource);
+			Media media = new Media(file.toURL().toString());
+			this.player = new MediaPlayer(media);
 		} else {
 			this.eventName = null;
+			this.start = 0;
+			this.player = null;
 		}
-		this.start = start;
-		this.end = end;
-		this.aPoint = aPoint;
-		this.bPoint = bPoint;
-		this.timing = timing;
-		this.volume = volume;
 	}
 	
 }
