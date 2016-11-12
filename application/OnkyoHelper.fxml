@@ -20,11 +20,12 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TableView fx:id="tableNearbyEventList" layoutX="19.0" layoutY="37.0" prefHeight="133.0" prefWidth="386.0">
+      <TableView fx:id="tableNearbyEventList" layoutX="18.0" layoutY="37.0" prefHeight="133.0" prefWidth="386.0">
         <columns>
           <TableColumn fx:id="columnNearbyEventNum" prefWidth="30.0" text="#" />
-          <TableColumn fx:id="columnNearbyEventName" prefWidth="240.0" text="EventName" />
-            <TableColumn fx:id="columnNearbyEventStart" prefWidth="115.0" text="Start" />
+            <TableColumn fx:id="columnNearbyEventStatus" prefWidth="30.0" text="Stat" />
+          <TableColumn fx:id="columnNearbyEventName" prefWidth="162.0" text="EventName" />
+            <TableColumn fx:id="columnNearbyEventStart" prefWidth="162.0" text="Start" />
         </columns>
       </TableView>
       <Button fx:id="buttonBack" layoutX="197.0" layoutY="219.0" mnemonicParsing="false" onAction="#onButtonBackAction" prefHeight="142.0" prefWidth="98.0" text="Back" />
@@ -41,5 +42,9 @@
       <Label layoutX="20.0" layoutY="193.0" text="ボリュームコントロール" />
       <Separator layoutX="20.0" layoutY="181.0" prefHeight="5.0" prefWidth="386.0" />
       <Label layoutX="197.0" layoutY="193.0" text="イベント進行" />
+      <Label fx:id="label1" layoutX="14.0" layoutY="65.0" />
+      <Label fx:id="label2" layoutX="14.0" layoutY="89.0" />
+      <Label fx:id="label3" layoutX="14.0" layoutY="113.0" />
+      <Label fx:id="label4" layoutX="14.0" layoutY="137.0" />
    </children>
 </Pane>

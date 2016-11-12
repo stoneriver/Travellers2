@@ -49,7 +49,7 @@ public class Plan {
 				eventName = config.getProperty("event" + num + "Name");
 				start = Integer.parseInt(config.getProperty("event" + num + "Start"));
 			}
-			events[i] = new Event(i, eventName, start, eventName);
+			events[i] = new Event(i, eventName, start);
 		}
 	}
 	
@@ -60,6 +60,10 @@ public class Plan {
 	 */
 	public Event[] getEvents() {
 		return events;
+	}
+	
+	public Event getEvent(int num) {
+		return events[num];
 	}
 	
 	/**

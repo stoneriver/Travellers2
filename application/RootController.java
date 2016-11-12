@@ -28,6 +28,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -39,7 +40,6 @@ public class RootController implements Initializable {
 	//変数宣言
 	//コントローラ使用分変数
 	private int currentEventNum;
-	private Event currentEvent;
 	private Plan plan;
 	
 	//GUI使用分変数
@@ -58,9 +58,19 @@ public class RootController implements Initializable {
 	@FXML
 	private TableColumn<Event, Integer> columnNearbyEventNum;
 	@FXML
+	private TableColumn<Event, String> columnNearbyEventStatus;
+	@FXML
 	private TableColumn<Event, String> columnNearbyEventName;
 	@FXML
 	private TableColumn<Event, Integer> columnNearbyEventStart;
+	@FXML
+	private Label label1;
+	@FXML
+	private Label label2;
+	@FXML
+	private Label label3;
+	@FXML
+	private Label label4;
 	//ボリュームコントロール
 	@FXML
 	private Button buttonClimax;
@@ -137,13 +147,24 @@ public class RootController implements Initializable {
 	
 	//コントローラ関数
 	private void setCurrentEvent(int num) {
+		
+		plan.getEvent(currentEventNum).stop();
+		
 		currentEventNum = num;
-		currentEvent = plan.getEvents()[currentEventNum];
+		//ボタンの有効無効
+		if (currentEventNum <= 0) {
+			buttonBack.setDisable(true);
+		} else {
+			buttonBack.setDisable(false);
+		}
+		if (currentEventNum >= plan.getEventCount() - 1) {
+			buttonForward.setDisable(true);
+		} else {
+			buttonForward.setDisable(false);
+		}
+		
+		plan.getEvent(currentEventNum).play();
 		updateNearbyEventList();
-	}
-	
-	private void setVolume(double volume) {
-		currentEvent.getPlayer().setVolume(volume);
 	}
 	
 	//GUI関数
@@ -169,6 +190,7 @@ public class RootController implements Initializable {
 	private void initializeNearbyEventList() {
 		obsevableNearbyEventList = FXCollections.observableArrayList();
 		columnNearbyEventNum.setCellValueFactory(new PropertyValueFactory<>("num"));
+		columnNearbyEventStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 		columnNearbyEventName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnNearbyEventStart.setCellValueFactory(new PropertyValueFactory<>("start"));
 		tableNearbyEventList.setItems(obsevableNearbyEventList);
@@ -183,6 +205,19 @@ public class RootController implements Initializable {
 	
 	private void updateNearbyEventList() {
 		obsevableNearbyEventList.clear();
+		int fix;
+		if (currentEventNum == 0) {
+			fix = 0;
+		} else if (currentEventNum == plan.getEventCount() - 2) {
+			fix = -2;
+		} else if (currentEventNum == plan.getEventCount() - 1) {
+			fix = -3;
+		} else {
+			fix = -1;
+		}
+		for (int i = fix + currentEventNum; i < fix + currentEventNum + 4; i++) {
+			obsevableNearbyEventList.add(plan.getEvent(i));
+		}
 		
 	}
 	
@@ -195,27 +230,27 @@ public class RootController implements Initializable {
 	//イベント関数
 	@FXML
 	private void onButtonClimaxAction() {
-		setVolume(1.0);
+		plan.getEvent(currentEventNum).setPreferredVolume(1.0);
 	}
 	
 	@FXML
 	private void onButtonNormalAction() {
-		setVolume(0.7);
+		plan.getEvent(currentEventNum).setPreferredVolume(0.7);
 	}
 	
 	@FXML
 	private void onButtonSilentAction() {
-		setVolume(0.0);
+		plan.getEvent(currentEventNum).setPreferredVolume(0.0);
 	}
 	
 	@FXML
 	private void onButtonBackAction() {
-		setCurrentEvent(currentEventNum + 1);
+		setCurrentEvent(currentEventNum - 1);
 	}
 	
 	@FXML
 	private void onButtonForwardAction() {
-		setCurrentEvent(currentEventNum - 1);
+		setCurrentEvent(currentEventNum + 1);
 	}
 	
 	@FXML
