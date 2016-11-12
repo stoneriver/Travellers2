@@ -1,4 +1,4 @@
-package application;
+package com.github.stoneriver.onkyohelper;
 
 import java.io.File;
 import java.net.MalformedURLException;

@@ -12,7 +12,7 @@
  *See the License for the specific language governing permissions and
  *limitations under the License.
  */
-package application;
+package com.github.stoneriver.onkyohelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,7 +38,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class RootController implements Initializable {
+public class OnkyoHelperController implements Initializable {
 	
 	//変数宣言
 	//コントローラ使用分変数
