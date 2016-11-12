@@ -109,7 +109,7 @@ public class RootController implements Initializable {
 		System.out.println("p");
 		int i;
 		for (String s : files) {
-			if (s.endsWith(".properties")) {
+			if (s.endsWith(".plan")) {
 				result.add(s);
 			}
 		}
