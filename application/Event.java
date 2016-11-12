@@ -77,7 +77,6 @@ public class Event {
 			return;
 		}
 		player.pause();
-		player.setVolume(0);
 	}
 	
 	public void stop() {
