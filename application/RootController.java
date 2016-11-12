@@ -15,10 +15,13 @@
 package application;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -41,6 +44,7 @@ public class RootController implements Initializable {
 	//コントローラ使用分変数
 	private int currentEventNum;
 	private Plan plan;
+	private Properties config = new Properties();
 	
 	//GUI使用分変数
 	//イベントリスト
@@ -95,6 +99,11 @@ public class RootController implements Initializable {
 		setDisableAll(true);
 		initializeNearbyEventList();
 		initializeEventList();
+		try {
+			loadConfig();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		menuUpdate = new MenuItem("Update");
 		menuUpdate.setOnAction((ActionEvent e) -> {
 			updateAvailablePlans();
@@ -106,7 +115,6 @@ public class RootController implements Initializable {
 		File dir = new File(".");
 		String[] files = dir.list();
 		List<String> result = new ArrayList<>();
-		System.out.println("p");
 		int i;
 		for (String s : files) {
 			if (s.endsWith(".plan")) {
@@ -143,6 +151,11 @@ public class RootController implements Initializable {
 		menuOpen.getItems().clear();
 		menuOpen.getItems().add(menuUpdate);
 		addPlansToMenu(plans);
+	}
+	
+	private void loadConfig() throws IOException {
+		InputStream inputStream = new FileInputStream(new File("OnkyoHelper.properties"));
+		config.load(inputStream);
 	}
 	
 	//コントローラ関数
@@ -230,12 +243,12 @@ public class RootController implements Initializable {
 	//イベント関数
 	@FXML
 	private void onButtonClimaxAction() {
-		plan.getEvent(currentEventNum).setPreferredVolume(1.0);
+		plan.getEvent(currentEventNum).setPreferredVolume(Double.parseDouble(config.getProperty("VolumeClimax")));
 	}
 	
 	@FXML
 	private void onButtonNormalAction() {
-		plan.getEvent(currentEventNum).setPreferredVolume(0.7);
+		plan.getEvent(currentEventNum).setPreferredVolume(Double.parseDouble(config.getProperty("VolumeNormal")));
 	}
 	
 	@FXML

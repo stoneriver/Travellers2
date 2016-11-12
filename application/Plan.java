@@ -26,10 +26,10 @@ public class Plan {
 	private final int eventCount;
 	private final Event[] events;
 	
-	public Plan(String property) throws IOException {
+	public Plan(String plan) throws IOException {
 		
-		//propertiesファイルをロード
-		InputStream inputStream = new FileInputStream(new File(property));
+		//planファイルをロード
+		InputStream inputStream = new FileInputStream(new File(plan));
 		InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "Shift-JIS");
 		config.load(inputStreamReader);
 		
