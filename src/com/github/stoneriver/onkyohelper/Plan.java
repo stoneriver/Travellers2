@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Properties;
 
 public class Plan {
@@ -28,38 +27,14 @@ public class Plan {
 	private final Event[] events;
 	
 	public Plan(String plan) throws IOException {
-		
-		//planファイルをロード
-		InputStream inputStream = new FileInputStream(new File(plan));
-		InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "Shift-JIS");
-		config.load(inputStreamReader);
-		
-		//イベントの個数を読み込み
-		eventCount = Integer.parseInt(config.getProperty("eventCount"));
-		events = new Event[eventCount];
-		
-		//イベントを読み込み
-		for (int i = 0; i < eventCount; i++) {
-			String num = String.valueOf(i);
-			String eventName;
-			int start;
-			if (config.getProperty("event" + num + "Name").equals("null")) {
-				eventName = "無音";
-				start = 0;
-			} else {
-				eventName = config.getProperty("event" + num + "Name");
-				start = Integer.parseInt(config.getProperty("event" + num + "Start"));
-			}
-			events[i] = new Event(i, eventName, start);
-		}
+		this(plan, true);
 	}
 	
 	public Plan(String plan, boolean generateMediaPlayer) throws IOException {
 		
 		//planファイルをロード
 		InputStream inputStream = new FileInputStream(new File(plan));
-		InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "Shift-JIS");
-		config.load(inputStreamReader);
+		config.load(inputStream);
 		
 		//イベントの個数を読み込み
 		eventCount = Integer.parseInt(config.getProperty("eventCount"));
