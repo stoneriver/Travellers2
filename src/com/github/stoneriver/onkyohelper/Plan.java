@@ -54,6 +54,33 @@ public class Plan {
 		}
 	}
 	
+	public Plan(String plan, boolean generateMediaPlayer) throws IOException {
+		
+		//planファイルをロード
+		InputStream inputStream = new FileInputStream(new File(plan));
+		InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "Shift-JIS");
+		config.load(inputStreamReader);
+		
+		//イベントの個数を読み込み
+		eventCount = Integer.parseInt(config.getProperty("eventCount"));
+		events = new Event[eventCount];
+		
+		//イベントを読み込み
+		for (int i = 0; i < eventCount; i++) {
+			String num = String.valueOf(i);
+			String eventName;
+			int start;
+			if (config.getProperty("event" + num + "Name").equals("null")) {
+				eventName = "無音";
+				start = 0;
+			} else {
+				eventName = config.getProperty("event" + num + "Name");
+				start = Integer.parseInt(config.getProperty("event" + num + "Start"));
+			}
+			events[i] = new Event(i, eventName, start, generateMediaPlayer);
+		}
+	}
+	
 	/**
 	 * eventsを取得します。
 	 * 

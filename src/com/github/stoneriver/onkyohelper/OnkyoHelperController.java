@@ -1,4 +1,4 @@
-/*Copyright 2016 stoneriver
+	/*Copyright 2016 stoneriver
  *
  *Licensed under the Apache License, Version 2.0 (the "License");
  *you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -29,6 +27,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -48,15 +48,16 @@ public class OnkyoHelperController implements Initializable {
 	
 	//GUI使用分変数
 	//イベントリスト
-	private ObservableList<Event> obsevableEventList;
+	private ObservableList<Event> eventList;
 	@FXML
 	private TableView<Event> tableEventList;
 	@FXML
 	private TableColumn<Event, Integer> columnEventNum;
 	@FXML
 	private TableColumn<Event, String> columnEventName;
+	
 	//直近イベントリスト
-	private ObservableList<Event> obsevableNearbyEventList;
+	private ObservableList<Event> nearbyEventList;
 	@FXML
 	private TableView<Event> tableNearbyEventList;
 	@FXML
@@ -75,6 +76,7 @@ public class OnkyoHelperController implements Initializable {
 	private Label label3;
 	@FXML
 	private Label label4;
+	
 	//ボリュームコントロール
 	@FXML
 	private Button buttonClimax;
@@ -82,15 +84,19 @@ public class OnkyoHelperController implements Initializable {
 	private Button buttonNormal;
 	@FXML
 	private Button buttonSilent;
+	
 	//イベント進行
 	@FXML
 	private Button buttonBack;
 	@FXML
 	private Button buttonForward;
+	
 	//メニュー
 	@FXML
 	private Menu menuOpen;
-	private MenuItem menuUpdate;
+	private MenuItem menuItemUpdate;
+	@FXML
+	private MenuItem menuItemAbout;
 	
 	//関数定義
 	//クラス定義
@@ -104,25 +110,11 @@ public class OnkyoHelperController implements Initializable {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		menuUpdate = new MenuItem("Update");
-		menuUpdate.setOnAction((ActionEvent e) -> {
+		menuItemUpdate = new MenuItem("Update");
+		menuItemUpdate.setOnAction((ActionEvent e) -> {
 			updateAvailablePlans();
 		});
 		updateAvailablePlans();
-	}
-	
-	private String[] findAllPlans() {
-		File dir = new File(".");
-		String[] files = dir.list();
-		List<String> result = new ArrayList<>();
-		int i;
-		for (String s : files) {
-			if (s.endsWith(".plan")) {
-				result.add(s);
-			}
-		}
-		
-		return (String[]) result.toArray(new String[0]);
 	}
 	
 	private void addPlansToMenu(String[] plans) {
@@ -147,15 +139,25 @@ public class OnkyoHelperController implements Initializable {
 	}
 	
 	private void updateAvailablePlans() {
-		String[] plans = findAllPlans();
+		String[] plans = OnkyoHelperCollections.findAllPlans();
 		menuOpen.getItems().clear();
-		menuOpen.getItems().add(menuUpdate);
+		menuOpen.getItems().add(menuItemUpdate);
 		addPlansToMenu(plans);
 	}
 	
 	private void loadConfig() throws IOException {
-		InputStream inputStream = new FileInputStream(new File("OnkyoHelper.properties"));
-		config.load(inputStream);
+		File file = new File("OnkyoHelper.properties");
+		InputStream inputStream;
+		if(file.exists()) {
+			inputStream = new FileInputStream(file);
+			config.load(inputStream);
+		} else {
+			file.createNewFile();
+			inputStream = new FileInputStream(file);
+			config.load(inputStream);
+			config.setProperty("VolumeNormal", "0.7");
+			config.setProperty("VolumeClimax", "1.0");
+		}
 	}
 	
 	//コントローラ関数
@@ -201,23 +203,23 @@ public class OnkyoHelperController implements Initializable {
 	}
 	
 	private void initializeNearbyEventList() {
-		obsevableNearbyEventList = FXCollections.observableArrayList();
+		nearbyEventList = FXCollections.observableArrayList();
 		columnNearbyEventNum.setCellValueFactory(new PropertyValueFactory<>("num"));
 		columnNearbyEventStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 		columnNearbyEventName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnNearbyEventStart.setCellValueFactory(new PropertyValueFactory<>("start"));
-		tableNearbyEventList.setItems(obsevableNearbyEventList);
+		tableNearbyEventList.setItems(nearbyEventList);
 	}
 	
 	private void initializeEventList() {
-		obsevableEventList = FXCollections.observableArrayList();
+		eventList = FXCollections.observableArrayList();
 		columnEventNum.setCellValueFactory(new PropertyValueFactory<>("num"));
 		columnEventName.setCellValueFactory(new PropertyValueFactory<>("name"));
-		tableEventList.setItems(obsevableEventList);
+		tableEventList.setItems(eventList);
 	}
 	
 	private void updateNearbyEventList() {
-		obsevableNearbyEventList.clear();
+		nearbyEventList.clear();
 		int fix;
 		if (currentEventNum == 0) {
 			fix = 0;
@@ -229,14 +231,14 @@ public class OnkyoHelperController implements Initializable {
 			fix = -1;
 		}
 		for (int i = fix + currentEventNum; i < fix + currentEventNum + 4; i++) {
-			obsevableNearbyEventList.add(plan.getEvent(i));
+			nearbyEventList.add(plan.getEvent(i));
 		}
 		
 	}
 	
 	private void updateEventList() {
 		for (Event e : plan.getEvents()) {
-			obsevableEventList.add(e);
+			eventList.add(e);
 		}
 	}
 	
@@ -267,8 +269,19 @@ public class OnkyoHelperController implements Initializable {
 	}
 	
 	@FXML
-	private void onMenuUpdateAction() {
+	private void onMenuItemUpdateAction() {
 		updateAvailablePlans();
+	}
+	
+	@FXML
+	private void onMenuItemAboutAction() {
+		Alert a = new Alert(AlertType.INFORMATION);
+		a.setHeaderText("OnkyoHelperについて");
+		a.setContentText("Version: Release1.0\n"
+				+ "Author: stoneriver\n"
+				+ "\n"
+				+ "© 2016 stoneriver");
+		a.show();
 	}
 	
 }

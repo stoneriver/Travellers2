@@ -23,9 +23,9 @@ import javafx.util.Duration;
 
 public class Event {
 	
-	private final int num;
-	private final String name;
-	private final int start;
+	private int num;
+	private String name;
+	private int start;
 	private boolean isSelected;
 	private final MediaPlayer player;
 	
@@ -40,7 +40,7 @@ public class Event {
 	
 	/**
 	 * nameを取得します。
-	 * 無音イベントの場合は、文字列"null"を返します。
+	 * 無音イベントの場合は、文字列"無音"を返します。
 	 * 
 	 * @return name
 	 */
@@ -161,14 +161,27 @@ public class Event {
 		
 	}
 	
+	public Event(int number, String eventName, int start) {
+		this(number, eventName, start, true);
+	}
+	
 	@SuppressWarnings("deprecation")
-	public Event(int number, String eventName, int start) throws MalformedURLException {
+	public Event(int number, String eventName, int start, boolean generateMediaPlayer) {
 		this.num = number;
 		this.name = eventName;
 		if (!eventName.startsWith("無音")) {
 			this.start = start;
 			File file = new File(eventName);
-			Media media = new Media(file.toURL().toString());
+			if (!generateMediaPlayer) {
+				this.player = null;
+				return;
+			}
+			Media media = null;
+			try {
+				media = new Media(file.toURL().toString());
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
 			this.player = new MediaPlayer(media);
 			player.setStartTime(Duration.millis(start));
 			player.setVolume(0);
