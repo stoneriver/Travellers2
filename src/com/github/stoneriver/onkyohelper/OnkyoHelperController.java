@@ -110,7 +110,7 @@ public class OnkyoHelperController implements Initializable {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		menuItemUpdate = new MenuItem("Update");
+		menuItemUpdate = new MenuItem(Messages.getString("OnkyoHelperController.Update")); //$NON-NLS-1$
 		menuItemUpdate.setOnAction((ActionEvent e) -> {
 			updateAvailablePlans();
 		});
@@ -146,7 +146,7 @@ public class OnkyoHelperController implements Initializable {
 	}
 	
 	private void loadConfig() throws IOException {
-		File file = new File("OnkyoHelper.properties");
+		File file = new File("OnkyoHelper.properties"); //$NON-NLS-1$
 		InputStream inputStream;
 		if(file.exists()) {
 			inputStream = new FileInputStream(file);
@@ -155,8 +155,8 @@ public class OnkyoHelperController implements Initializable {
 			file.createNewFile();
 			inputStream = new FileInputStream(file);
 			config.load(inputStream);
-			config.setProperty("VolumeNormal", "0.7");
-			config.setProperty("VolumeClimax", "1.0");
+			config.setProperty("VolumeNormal", "0.7"); //$NON-NLS-1$ //$NON-NLS-2$
+			config.setProperty("VolumeClimax", "1.0"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 	
@@ -204,17 +204,17 @@ public class OnkyoHelperController implements Initializable {
 	
 	private void initializeNearbyEventList() {
 		nearbyEventList = FXCollections.observableArrayList();
-		columnNearbyEventNum.setCellValueFactory(new PropertyValueFactory<>("num"));
-		columnNearbyEventStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-		columnNearbyEventName.setCellValueFactory(new PropertyValueFactory<>("name"));
-		columnNearbyEventStart.setCellValueFactory(new PropertyValueFactory<>("start"));
+		columnNearbyEventNum.setCellValueFactory(new PropertyValueFactory<>("num")); //$NON-NLS-1$
+		columnNearbyEventStatus.setCellValueFactory(new PropertyValueFactory<>("status")); //$NON-NLS-1$
+		columnNearbyEventName.setCellValueFactory(new PropertyValueFactory<>("name")); //$NON-NLS-1$
+		columnNearbyEventStart.setCellValueFactory(new PropertyValueFactory<>("start")); //$NON-NLS-1$
 		tableNearbyEventList.setItems(nearbyEventList);
 	}
 	
 	private void initializeEventList() {
 		eventList = FXCollections.observableArrayList();
-		columnEventNum.setCellValueFactory(new PropertyValueFactory<>("num"));
-		columnEventName.setCellValueFactory(new PropertyValueFactory<>("name"));
+		columnEventNum.setCellValueFactory(new PropertyValueFactory<>("num")); //$NON-NLS-1$
+		columnEventName.setCellValueFactory(new PropertyValueFactory<>("name")); //$NON-NLS-1$
 		tableEventList.setItems(eventList);
 	}
 	
@@ -245,12 +245,12 @@ public class OnkyoHelperController implements Initializable {
 	//イベント関数
 	@FXML
 	private void onButtonClimaxAction() {
-		plan.getEvent(currentEventNum).setPreferredVolume(Double.parseDouble(config.getProperty("VolumeClimax")));
+		plan.getEvent(currentEventNum).setPreferredVolume(Double.parseDouble(config.getProperty("VolumeClimax"))); //$NON-NLS-1$
 	}
 	
 	@FXML
 	private void onButtonNormalAction() {
-		plan.getEvent(currentEventNum).setPreferredVolume(Double.parseDouble(config.getProperty("VolumeNormal")));
+		plan.getEvent(currentEventNum).setPreferredVolume(Double.parseDouble(config.getProperty("VolumeNormal"))); //$NON-NLS-1$
 	}
 	
 	@FXML
@@ -276,11 +276,11 @@ public class OnkyoHelperController implements Initializable {
 	@FXML
 	private void onMenuItemAboutAction() {
 		Alert a = new Alert(AlertType.INFORMATION);
-		a.setHeaderText("OnkyoHelperについて");
-		a.setContentText("Version: Release1.0\n"
-				+ "Author: stoneriver\n"
-				+ "\n"
-				+ "© 2016 stoneriver");
+		a.setHeaderText(Messages.getString("OnkyoHelperController.About0")); //$NON-NLS-1$
+		a.setContentText(Messages.getString("Main.Version") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
+				+ Messages.getString("OnkyoHelperController.About1") //$NON-NLS-1$
+				+ Messages.getString("OnkyoHelperController.About2") //$NON-NLS-1$
+				+ Messages.getString("OnkyoHelperController.About3")); //$NON-NLS-1$
 		a.show();
 	}
 	

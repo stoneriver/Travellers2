@@ -70,9 +70,9 @@ public class Event {
 	 */
 	public String getStatus() {
 		if (isSelected) {
-			return "➤";
+			return "➤"; //$NON-NLS-1$
 		} else {
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 	}
 	
@@ -120,7 +120,7 @@ public class Event {
 					if (!volumeChangingFlg) {
 						break;
 					}
-					System.out.println("++");
+					System.out.println("++"); //$NON-NLS-1$
 				}
 				volumeChangingFlg = false;
 			};
@@ -136,7 +136,7 @@ public class Event {
 					if (!volumeChangingFlg) {
 						break;
 					}
-					System.out.println("--");
+					System.out.println("--"); //$NON-NLS-1$
 				}
 				volumeChangingFlg = false;
 			};
@@ -169,7 +169,7 @@ public class Event {
 	public Event(int number, String eventName, int start, boolean generateMediaPlayer) {
 		this.num = number;
 		this.name = eventName;
-		if (!eventName.startsWith("無音")) {
+		if (!eventName.startsWith("無音")) { //$NON-NLS-1$
 			this.start = start;
 			File file = new File(eventName);
 			if (!generateMediaPlayer) {

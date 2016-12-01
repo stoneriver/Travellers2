@@ -37,7 +37,7 @@ public class Plan {
 		config.load(inputStream);
 		
 		//イベントの個数を読み込み
-		eventCount = Integer.parseInt(config.getProperty("eventCount"));
+		eventCount = Integer.parseInt(config.getProperty("eventCount")); //$NON-NLS-1$
 		events = new Event[eventCount];
 		
 		//イベントを読み込み
@@ -45,12 +45,12 @@ public class Plan {
 			String num = String.valueOf(i);
 			String eventName;
 			int start;
-			if (config.getProperty("event" + num + "Name").equals("null")) {
-				eventName = "無音";
+			if (config.getProperty("event" + num + "Name").equals("null")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				eventName = "無音"; //$NON-NLS-1$
 				start = 0;
 			} else {
-				eventName = config.getProperty("event" + num + "Name");
-				start = Integer.parseInt(config.getProperty("event" + num + "Start"));
+				eventName = config.getProperty("event" + num + "Name"); //$NON-NLS-1$ //$NON-NLS-2$
+				start = Integer.parseInt(config.getProperty("event" + num + "Start")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			events[i] = new Event(i, eventName, start, generateMediaPlayer);
 		}
