@@ -48,6 +48,10 @@ public class Event {
 		return name;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	/**
 	 * startを取得します。
 	 * 無音イベントの場合は、0を返します。
