@@ -39,7 +39,7 @@ public class ResourceManager {
 	 * 1回だけ呼び出されます.
 	 */
 	private ResourceManager() {
-		resource = new Image[Character.MAX_CODE_POINT];
+		resource = new Image[0xFF];
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class ResourceManager {
 	 *            リソースのID.
 	 * @return リソース.
 	 */
-	public Image getResouece(char id) {
+	public Image getResouece(int id) {
 		if (resource[id] == null) {
 			InputStream is = getClass().getResourceAsStream("resource/" + id + ".png");
 			resource[id] = new Image(is);

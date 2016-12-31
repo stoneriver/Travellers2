@@ -15,6 +15,8 @@
  */
 package com.github.stoneriver.travellers2;
 
+import java.io.IOException;
+
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -45,7 +47,7 @@ public class PaneGame extends Group {
 		}
 	}
 
-	public PaneGame() {
+	public PaneGame()  {
 		// 描画用カンバスの設定
 		canvas = new javafx.scene.canvas.Canvas(640, 480);
 		getChildren().add(canvas);
@@ -63,7 +65,11 @@ public class PaneGame extends Group {
 		};
 		timer.start();
 
-		map = new Map();
+		try {
+			map = new Map();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 }
