@@ -19,17 +19,36 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 /**
+ * マップを表現するクラスです.<br>
+ * マップは次の要素で構成されます;<br>
+ * ・マップ・セル.マップの描画を決定します.<br>
+ * <br>
+ * マップのエンコードは以下の通りです.<br>
+ * 1行目;2整数X, Yが空白区切りで与えられます.<br>
+ * XはマップのX軸方向の要素数を表します. YはマップのY軸方向の要素数を表します.<br>
+ * i行目（2 ≤ i ≤ Y + 1）;16進数で表現された整数がX個,空白区切りで与えられます.<br>
+ * i行目,j列目の数は座標(j, i)のマップデータのIDです.
  *
- * @author Ayumu
+ * @author stoneriver
  */
 public class Map {
 	/**
-	 * マップ・データです. 座標(x, y)のマップidはdata[y][x]に格納されていることに留意してください.
+	 * マップ・セルです.<br>
+	 * 座標(x, y)のマップ・セルIDはdata[y][x]に格納されていることに留意してください.
 	 */
-	private int[][] data;
+	private int[][] cells;
+
+	/**
+	 * X方向のセル数です.
+	 */
+	private int X;
+
+	/**
+	 * Y方向のセル数です.
+	 */
+	private int Y;
 
 	/**
 	 * 座標(x, y)のマップidを取得します。
@@ -41,7 +60,25 @@ public class Map {
 	 * @return マップid
 	 */
 	public int getCell(int x, int y) {
-		return data[y][x];
+		return cells[y][x];
+	}
+
+	/**
+	 * X方向のセル数を取得します.
+	 *
+	 * @return X方向のセル数
+	 */
+	public int getX() {
+		return X;
+	}
+
+	/**
+	 * Y方向のセル数を取得します.
+	 *
+	 * @return Y方向のセル数
+	 */
+	public int getY() {
+		return Y;
 	}
 
 	/**
@@ -56,17 +93,23 @@ public class Map {
 		InputStreamReader inr = new InputStreamReader(in);
 		BufferedReader rd = new BufferedReader(inr);
 
-		ArrayList<int[]> tmp = new ArrayList<int[]>(0);
 		String str;
-		while ((str = rd.readLine()) != null) {
-			String[] cellstr = str.split(" ");
-			int[] cellint = new int[cellstr.length];
-			for (int j = 0; j < cellstr.length; j++) {
-				cellint[j] = Integer.decode("0x" + cellstr[j]);
+
+		// X, Yの読み込み
+		str = rd.readLine();
+		String[] xny = str.split(" ");
+		X = Integer.valueOf(xny[0]);
+		Y = Integer.valueOf(xny[1]);
+
+		// マップセルの読み込み
+		cells = new int[Y][X];
+		for (int y = 0; y < Y; y++) {
+			str = rd.readLine();
+			String[] row = str.split(" ");
+			for (int x = 0; x < X; x++) {
+				cells[y][x] = Integer.decode("0x" + row[x]);
 			}
-			tmp.add(cellint);
 		}
-		data = tmp.toArray(new int[tmp.size()][]);
 	}
 
 	/**

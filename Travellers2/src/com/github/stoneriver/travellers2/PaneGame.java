@@ -24,30 +24,30 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * ゲーム画面のクラスです.
- * インスタンスをSceneの子ノードにして使ってください.
+ * ゲーム画面のクラスです. インスタンスをSceneの子ノードにして使ってください.
+ *
  * @author Ayumu
  */
 public class PaneGame extends Group {
 	private Canvas canvas;
 	private GraphicsContext gc;
 	private AnimationTimer timer;
-
 	private Map map;
+	private final int CELL_SIZE = 32;
 
 	/**
 	 * 描画関数です。
 	 */
 	private void paint() {
-		for (int x = 0; x < 3; x++) {
-			for (int y = 0; y < 2; y++) {
+		for (int x = 0; x < map.getX(); x++) {
+			for (int y = 0; y < map.getY(); y++) {
 				Image img = ResourceManager.mng.getResouece(map.getCell(x, y));
-				gc.drawImage(img, x * 32, y * 32);
+				gc.drawImage(img, x * CELL_SIZE, y * CELL_SIZE);
 			}
 		}
 	}
 
-	public PaneGame()  {
+	public PaneGame() {
 		// 描画用カンバスの設定
 		canvas = new javafx.scene.canvas.Canvas(640, 480);
 		getChildren().add(canvas);
@@ -70,6 +70,5 @@ public class PaneGame extends Group {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 }
