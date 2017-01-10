@@ -16,7 +16,7 @@
 package com.github.stoneriver.travellers2.image;
 
 import java.awt.Image;
-import java.io.File;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
@@ -27,8 +27,9 @@ import javax.imageio.ImageIO;
  */
 public class ImageLoader {
 
-	public static Image loadImage(String source) {
-		return ImageIO.read(new File(source));
+	public static Image loadImage(String source) throws IOException {
+		System.out.println(source);
+		return ImageIO.read(ImageLoader.class.getResourceAsStream(source));
 	}
 
 }

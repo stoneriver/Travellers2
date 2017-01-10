@@ -18,7 +18,7 @@ package com.github.stoneriver.travellers2.block;
 import java.awt.Image;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import com.github.stoneriver.travellers2.image.ImageLoader;
 
 /**
  * 草ブロックを表すクラスです.
@@ -26,7 +26,6 @@ import javax.imageio.ImageIO;
  * @author stoneriver
  */
 public class BlockGrass extends Block {
-	private static final String textureSource = BlockGrass.class.getSimpleName() + ".png";
 	private static Image texture;
 
 	@Override
@@ -35,8 +34,9 @@ public class BlockGrass extends Block {
 	}
 
 	static {
+		String textureSource = BlockGrass.class.getSimpleName() + ".png";
 		try {
-			texture = ImageIO.read(BlockGrass.class.getResourceAsStream(textureSource));
+			texture = ImageLoader.loadImage(textureSource);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

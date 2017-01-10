@@ -20,7 +20,6 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import com.github.stoneriver.travellers2.scene.Scene;
-import com.github.stoneriver.travellers2.scene.SceneTest;
 
 /**
  * Travellers2メイン・クラスです.
@@ -51,8 +50,11 @@ public class Travellers2 extends JFrame {
 		setResizable(false);
 		pack();
 
+		//色々設定-------------------------------------------------------------
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 		//初期GUIの設定--------------------------------------------------------
-		setScene(new SceneTest(this));
+
 
 		//表示-----------------------------------------------------------------
 		setVisible(true);

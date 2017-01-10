@@ -161,6 +161,10 @@ public class Map {
 		return imgBackground;
 	}
 
+	public Block getBlockAt(int x, int y) {
+		return array.getArrayof(x, y);
+	}
+
 	/**
 	 * マップインスタンスを生成します.<br>
 	 * デフォルトではマップファイルだけを読み込みます.引数で指定された場合,イメージの読み込みも行います.
