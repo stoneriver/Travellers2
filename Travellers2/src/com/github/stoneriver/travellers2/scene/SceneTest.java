@@ -15,10 +15,10 @@
  */
 package com.github.stoneriver.travellers2.scene;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import com.github.stoneriver.travellers2.Travellers2;
+import com.github.stoneriver.travellers2.block.BlockGrass;
 
 /**
  * テストクラス.
@@ -34,8 +34,7 @@ public class SceneTest extends Scene {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, getWidth(), getHeight());
+		g.drawImage(new BlockGrass().getTexture(), 100, 100, null);
 	}
 
 }

@@ -32,7 +32,7 @@ import com.github.stoneriver.travellers2.block.Block;
  * <br>
  * background.png //背景の定義<br>
  * blockCnt mapX mapY //マップ情報の定義<br>
- * a BlockGrass //ブロックの定義<br>
+ * a com.github.stoneriver.travellers2.block.BlockGrass //ブロックの定義<br>
  * :<br>
  * :<br>
  * aaa //マップデータ<br>
@@ -132,7 +132,7 @@ public class Map {
 	 * loadDaa()で読み込まれたデータをもとに,イメージを読み込みます.
 	 *
 	 * @throws IOException
-	 *             {@link ImageIO#read(String)}でIOExceptionがスローされた場合
+	 *             {@link ImageIO#read(File)}でIOExceptionがスローされた場合
 	 */
 	public void loadImage() throws IOException {
 		imgBackground = ImageIO.read(new File(backgroundSource));
@@ -184,6 +184,7 @@ public class Map {
 	 * このコンストラクタでは,インスタンス生成と同時にイメージの読み込みが行われます.
 	 *
 	 * @param source
+	 *            マップファイル(.dat形式)の名前
 	 * @throws IOException
 	 *             {@link #loadImage()}でIOExceptionがスローされた場合
 	 */
