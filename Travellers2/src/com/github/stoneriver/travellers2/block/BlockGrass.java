@@ -26,12 +26,9 @@ import javax.imageio.ImageIO;
  * @author stoneriver
  */
 public class BlockGrass extends Block {
-
+	private static final String textureSource = BlockGrass.class.getSimpleName() + ".png";
 	private static Image texture;
 
-	/* (非 Javadoc)
-	 * @see com.github.stoneriver.travellers2.block.Block#getTexture()
-	 */
 	@Override
 	public Image getTexture() {
 		return texture;
@@ -39,10 +36,9 @@ public class BlockGrass extends Block {
 
 	static {
 		try {
-			texture = ImageIO.read(BlockGrass.class.getResourceAsStream(BlockGrass.class.getSimpleName() + ".png"));
+			texture = ImageIO.read(BlockGrass.class.getResourceAsStream(textureSource));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 }

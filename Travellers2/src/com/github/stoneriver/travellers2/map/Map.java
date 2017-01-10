@@ -25,6 +25,7 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 
 import com.github.stoneriver.travellers2.block.Block;
+import com.github.stoneriver.travellers2.image.ImageLoader;
 
 /**
  * マップの読み込み,データの保持を行います.<br>
@@ -114,6 +115,7 @@ public class Map {
 			}
 		}
 
+		array = new MapDataArray(mapX, mapY);
 		//マップデータの読み込み
 		for (int y = 0; y < mapY; y++) {
 			String s = sc.next();
@@ -135,7 +137,7 @@ public class Map {
 	 *             {@link ImageIO#read(File)}でIOExceptionがスローされた場合
 	 */
 	public void loadImage() throws IOException {
-		imgBackground = ImageIO.read(new File(backgroundSource));
+		imgBackground = ImageLoader.loadImage(backgroundSource);
 	}
 
 	/**

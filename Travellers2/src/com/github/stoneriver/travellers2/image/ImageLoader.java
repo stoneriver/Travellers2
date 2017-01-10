@@ -13,34 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.stoneriver.travellers2.scene;
+package com.github.stoneriver.travellers2.image;
 
-import java.awt.Graphics;
-import java.io.IOException;
+import java.awt.Image;
+import java.io.File;
 
-import com.github.stoneriver.travellers2.Travellers2;
-import com.github.stoneriver.travellers2.map.Map;
+import javax.imageio.ImageIO;
 
 /**
- * テストクラス.
+ *
  *
  * @author stoneriver
  */
-public class SceneTest extends Scene {
+public class ImageLoader {
 
-	public SceneTest(Travellers2 parent) {
-		super(parent);
-		try {
-			Map map = new Map("map1.dat");
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	public static Image loadImage(String source) {
+		return ImageIO.read(new File(source));
 	}
 
 }

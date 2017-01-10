@@ -42,7 +42,7 @@ public class MapDataArray {
 	/**
 	 * 指定された座標のBlockをセットします.
 	 * @param x x座標
-	 * @param y t座標
+	 * @param y y座標
 	 * @param newBlock 新しいBlock
 	 */
 	public void setArrayof(int x, int y, Block newBlock) {
