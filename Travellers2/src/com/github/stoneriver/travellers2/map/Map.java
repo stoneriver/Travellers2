@@ -32,7 +32,7 @@ import com.github.stoneriver.travellers2.block.Block;
  * <br>
  * background.png //背景の定義<br>
  * blockCnt mapX mapY //マップ情報の定義<br>
- * a BlockGrass //パーツの定義<br>
+ * a BlockGrass //ブロックの定義<br>
  * :<br>
  * :<br>
  * aaa //マップデータ<br>
@@ -73,23 +73,59 @@ public class Map {
 	private Image imgBackground;
 
 	/**
+	 * マップデータで使うchar,ブロックです.<br>
+	 * 例えば、マップデータに次の記述があった場合:<br>
+	 * a com.github.stoneriver.travellers2.block.BlockGrass<br>
+	 * コード内で,次のデータは:<br>
+	 * {@code blocks.get('a');}
+	 * 次に等しくなります:<br>
+	 * {@code Class.forname("com.github.stoneriver.travellers2.block.BlockGrass")}
 	 *
 	 */
-	// TODO loadXX()と合わせて,blockのテクスチャの使用法模索
-	private HashMap<Character, Block> blocks = new HashMap<>();
+	private HashMap<Character, Class<Block>> blocks = new HashMap<>();
+
+	/**
+	 * マップデータです.
+	 */
+	private MapDataArray array;
 
 	/**
 	 * マップのデータを読み込みます.<br>
 	 * 通常,このメソッドはインスタンス生成時に一度呼び出され,それ以降呼び出されることはありません.
 	 */
+	@SuppressWarnings("unchecked")
 	private void loadData() {
+
+		//背景,マップ情報の読み込み
 		backgroundSource = sc.next();
 		blockCnt = sc.nextInt();
 		mapX = sc.nextInt();
 		mapY = sc.nextInt();
+
+		//ブロックの定義
 		for (int i = 0; i < blockCnt; i++) {
-			// TODO
+			char c = sc.next().charAt(0);
+			String s = sc.next();
+			try {
+				blocks.put(c, (Class<Block>) Class.forName(s));
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				System.err.println("マップの読み込みでエラーが発生しました.次のクラスが見つかりません:" + s);
+			}
 		}
+
+		//マップデータの読み込み
+		for (int y = 0; y < mapY; y++) {
+			String s = sc.next();
+			char[] cs = s.toCharArray();
+			for (int x = 0; x < mapX; x++)
+				try {
+					array.setArrayof(x, y, blocks.get(cs[x]).newInstance());
+				} catch (InstantiationException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
+		}
+
 	}
 
 	/**
@@ -100,7 +136,6 @@ public class Map {
 	 */
 	public void loadImage() throws IOException {
 		imgBackground = ImageIO.read(new File(backgroundSource));
-		// TODO ImageIO.read()参照のこと.
 	}
 
 	/**
