@@ -13,22 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.stoneriver.travellers2.image;
-
-import java.awt.Image;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 /**
  *
  *
  * @author stoneriver
  */
-public class ImageLoader {
-
-	public static Image loadImage(String source) throws IOException {
-		return ImageIO.read(ImageLoader.class.getResourceAsStream(source));
-	}
-
-}
+package com.github.stoneriver.travellers2.background;

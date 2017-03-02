@@ -16,10 +16,12 @@
 package com.github.stoneriver.travellers2;
 
 import java.awt.Dimension;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
 import com.github.stoneriver.travellers2.scene.Scene;
+import com.github.stoneriver.travellers2.scene.SceneStage1;
 
 /**
  * Travellers2メイン・クラスです.
@@ -54,7 +56,11 @@ public class Travellers2 extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		//初期GUIの設定--------------------------------------------------------
-
+		try {
+			setScene(new SceneStage1(this));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		//表示-----------------------------------------------------------------
 		setVisible(true);

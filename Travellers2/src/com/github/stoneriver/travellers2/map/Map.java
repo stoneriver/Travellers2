@@ -16,22 +16,19 @@
 package com.github.stoneriver.travellers2.map;
 
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
-
+import com.github.stoneriver.travellers2.background.Background;
 import com.github.stoneriver.travellers2.block.Block;
-import com.github.stoneriver.travellers2.image.ImageLoader;
 
 /**
  * マップの読み込み,データの保持を行います.<br>
  * マップは,.datファイルから読み込まれます.次に,マップデータを格納するファイルのテンプレートを示します.<br>
  * <br>
- * background.png //背景の定義<br>
+ * com.github.stoneriver.travellers2.background.Background //背景の定義<br>
  * blockCnt mapX mapY //マップ情報の定義<br>
  * a com.github.stoneriver.travellers2.block.BlockGrass //ブロックの定義<br>
  * :<br>
@@ -49,9 +46,9 @@ public class Map {
 	private Scanner sc;
 
 	/**
-	 * 背景のソースです.
+	 * 背景です.
 	 */
-	private String backgroundSource;
+	private Background background;
 
 	/**
 	 * 使用するブロックの種類の数です.
@@ -67,11 +64,6 @@ public class Map {
 	 * マップのY方向の大きさです.
 	 */
 	private int mapY;
-
-	/**
-	 * 背景のイメージです.
-	 */
-	private Image imgBackground;
 
 	/**
 	 * マップデータで使うchar,ブロックです.<br>
@@ -97,16 +89,26 @@ public class Map {
 	@SuppressWarnings("unchecked")
 	private void loadData() {
 
-		//背景,マップ情報の読み込み
-		backgroundSource = sc.next();
+		//背景の読み込み
+		String s;
+		s = sc.next();
+		try {
+			background = (Background) Class.forName(s).newInstance();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e1) {
+			System.err.println("マップの読み込みでエラーが発生しました.次のクラスが見つかりません:" + s);
+			e1.printStackTrace();
+		}
+
+		//マップ情報の読み込み
 		blockCnt = sc.nextInt();
 		mapX = sc.nextInt();
 		mapY = sc.nextInt();
 
 		//ブロックの定義
+		char c;
 		for (int i = 0; i < blockCnt; i++) {
-			char c = sc.next().charAt(0);
-			String s = sc.next();
+			c = sc.next().charAt(0);
+			s = sc.next();
 			try {
 				blocks.put(c, (Class<Block>) Class.forName(s));
 			} catch (ClassNotFoundException e) {
@@ -118,7 +120,7 @@ public class Map {
 		array = new MapDataArray(mapX, mapY);
 		//マップデータの読み込み
 		for (int y = 0; y < mapY; y++) {
-			String s = sc.next();
+			s = sc.next();
 			char[] cs = s.toCharArray();
 			for (int x = 0; x < mapX; x++)
 				try {
@@ -128,16 +130,6 @@ public class Map {
 				}
 		}
 
-	}
-
-	/**
-	 * loadDaa()で読み込まれたデータをもとに,イメージを読み込みます.
-	 *
-	 * @throws IOException
-	 *             {@link ImageIO#read(File)}でIOExceptionがスローされた場合
-	 */
-	public void loadImage() throws IOException {
-		imgBackground = ImageLoader.loadImage(backgroundSource);
 	}
 
 	/**
@@ -155,10 +147,10 @@ public class Map {
 	}
 
 	/**
-	 * @return imgBackground
+	 * @return 背景
 	 */
 	public Image getimgBackground() {
-		return imgBackground;
+		return background.getBackground();
 	}
 
 	public Block getBlockAt(int x, int y) {
@@ -171,30 +163,12 @@ public class Map {
 	 *
 	 * @param source
 	 *            マップファイル(.dat形式)の名前
-	 * @param loadImage
-	 *            イメージの読み込みを行うか.trueならば行い,falseならば行いません.<br>
-	 *            falseを指定した場合,ユーザーは,あとで{@link #loadImage()}を呼ぶ必要があります.
-	 * @throws IOException
-	 *             {@link #loadImage()}でIOExceptionがスローされた場合
-	 */
-	public Map(String source, boolean loadImage) throws IOException {
-		InputStream in = getClass().getResourceAsStream(source);
-		sc = new Scanner(in);
-		loadData();
-		if (loadImage)
-			loadImage();
-	}
-
-	/**
-	 * マップインスタンスを生成します.<br>
-	 * このコンストラクタでは,インスタンス生成と同時にイメージの読み込みが行われます.
-	 *
-	 * @param source
-	 *            マップファイル(.dat形式)の名前
 	 * @throws IOException
 	 *             {@link #loadImage()}でIOExceptionがスローされた場合
 	 */
 	public Map(String source) throws IOException {
-		this(source, true);
+		InputStream in = getClass().getResourceAsStream(source);
+		sc = new Scanner(in);
+		loadData();
 	}
 }

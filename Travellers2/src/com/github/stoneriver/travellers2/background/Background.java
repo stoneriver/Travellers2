@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.stoneriver.travellers2.image;
+package com.github.stoneriver.travellers2.background;
 
 import java.awt.Image;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 /**
- *
+ * マップでの背景を表すクラスです.
  *
  * @author stoneriver
  */
-public class ImageLoader {
-
-	public static Image loadImage(String source) throws IOException {
-		return ImageIO.read(ImageLoader.class.getResourceAsStream(source));
-	}
-
+public abstract class Background {
+	/**
+	 * 背景を取得します.<br>
+	 * サブクラスでこのメソッドを実装するときには,メモリー節約のため,静的フィールド返すようにしてください.
+	 *
+	 * @return Blockのテクスチャ
+	 */
+	public abstract Image getBackground();
 }

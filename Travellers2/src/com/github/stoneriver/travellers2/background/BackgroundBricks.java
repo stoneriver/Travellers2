@@ -13,22 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.stoneriver.travellers2.image;
+package com.github.stoneriver.travellers2.background;
 
 import java.awt.Image;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import com.github.stoneriver.travellers2.image.ImageLoader;
 
 /**
  *
  *
  * @author stoneriver
  */
-public class ImageLoader {
+public class BackgroundBricks extends Background {
+	private static Image background;
 
-	public static Image loadImage(String source) throws IOException {
-		return ImageIO.read(ImageLoader.class.getResourceAsStream(source));
+	static{
+		String source = BackgroundBricks.class.getSimpleName() + ".png";
+		try {
+			background = ImageLoader.loadImage(source);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
+	@Override
+	public Image getBackground() {
+		return background;
+	}
 }

@@ -13,22 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.stoneriver.travellers2.image;
+package com.github.stoneriver.travellers2.scene;
 
-import java.awt.Image;
+import java.awt.Graphics;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import com.github.stoneriver.travellers2.Travellers2;
+import com.github.stoneriver.travellers2.map.Map;
 
 /**
  *
  *
  * @author stoneriver
  */
-public class ImageLoader {
+public class SceneStage1 extends Scene{
 
-	public static Image loadImage(String source) throws IOException {
-		return ImageIO.read(ImageLoader.class.getResourceAsStream(source));
+	private Map map;
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(map.getimgBackground(), 0, 0, null, null);
+	}
+
+	public SceneStage1(Travellers2 parent) throws IOException {
+		super(parent);
+		map = new Map("Stage1.dat");
 	}
 
 }
