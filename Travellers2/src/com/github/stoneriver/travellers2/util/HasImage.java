@@ -15,12 +15,22 @@
  */
 package com.github.stoneriver.travellers2.util;
 
+import java.awt.Image;
+
 /**
- * 引数,返り値をともに取らない関数型インターフェースです.
+ * 画像を持つクラスです.
+ * 画像は,GUIに表示するときに使われます.
  *
  * @author stoneriver
  */
-@FunctionalInterface
-public interface Process {
-	void process();
+public interface HasImage {
+
+	/**
+	 * 画像を取得します.
+	 * サブクラスでこのメソッドを実装するときには,メモリー節約のため,静的フィールドを返すようにしてください.
+	 *
+	 * @return Image
+	 */
+	Image getImage();
+
 }

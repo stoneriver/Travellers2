@@ -150,7 +150,7 @@ public class Map {
 	 * @return 背景
 	 */
 	public Image getimgBackground() {
-		return background.getBackground();
+		return background.getImage();
 	}
 
 	public Block getBlockAt(int x, int y) {

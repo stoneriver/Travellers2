@@ -38,7 +38,7 @@ public class BackgroundBricks extends Background {
 	}
 
 	@Override
-	public Image getBackground() {
+	public Image getImage() {
 		return background;
 	}
 }

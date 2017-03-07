@@ -15,19 +15,12 @@
  */
 package com.github.stoneriver.travellers2.background;
 
-import java.awt.Image;
+import com.github.stoneriver.travellers2.util.HasImage;
 
 /**
  * マップでの背景を表すクラスです.
  *
  * @author stoneriver
  */
-public abstract class Background {
-	/**
-	 * 背景を取得します.<br>
-	 * サブクラスでこのメソッドを実装するときには,メモリー節約のため,静的フィールド返すようにしてください.
-	 *
-	 * @return Blockのテクスチャ
-	 */
-	public abstract Image getBackground();
+public abstract class Background implements HasImage{
 }

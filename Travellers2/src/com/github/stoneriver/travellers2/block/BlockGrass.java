@@ -29,7 +29,7 @@ public class BlockGrass extends Block {
 	private static Image texture;
 
 	@Override
-	public Image getTexture() {
+	public Image getImage() {
 		return texture;
 	}
 

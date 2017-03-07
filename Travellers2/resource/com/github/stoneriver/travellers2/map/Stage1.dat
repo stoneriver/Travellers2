@@ -1,6 +1,19 @@
 com.github.stoneriver.travellers2.background.BackgroundBricks
-1 2 3
+2 20 15
 a com.github.stoneriver.travellers2.block.BlockGrass
-aa
-aa
-aa
+b com.github.stoneriver.travellers2.block.BlockAir
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+aaaaaaaaaaaaaaaaaaaa

@@ -13,14 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.stoneriver.travellers2.util;
+package com.github.stoneriver.travellers2.mob;
+
+import java.awt.Image;
+import java.io.IOException;
+
+import com.github.stoneriver.travellers2.image.ImageLoader;
 
 /**
- * 引数,返り値をともに取らない関数型インターフェースです.
+ *
  *
  * @author stoneriver
  */
-@FunctionalInterface
-public interface Process {
-	void process();
+public class Player extends Mob {
+	private static Image texture;
+
+	@Override
+	public Image getImage() {
+		return texture;
+	}
+
+	static {
+		String textureSource = "StickFigure.png";
+		try {
+			texture = ImageLoader.loadImage(textureSource);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 }

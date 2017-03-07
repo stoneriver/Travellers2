@@ -21,7 +21,7 @@ import java.io.IOException;
 import javax.swing.JFrame;
 
 import com.github.stoneriver.travellers2.scene.Scene;
-import com.github.stoneriver.travellers2.scene.SceneStage1;
+import com.github.stoneriver.travellers2.scene.SceneStage;
 
 /**
  * Travellers2メイン・クラスです.
@@ -57,7 +57,7 @@ public class Travellers2 extends JFrame {
 
 		//初期GUIの設定--------------------------------------------------------
 		try {
-			setScene(new SceneStage1(this));
+			setScene(new SceneStage(this));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

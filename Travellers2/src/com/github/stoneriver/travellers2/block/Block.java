@@ -15,19 +15,12 @@
  */
 package com.github.stoneriver.travellers2.block;
 
-import java.awt.Image;
+import com.github.stoneriver.travellers2.util.HasImage;
 
 /**
  * マップ上のブロックを表す抽象クラスです.
  *
  * @author stoneriver
  */
-public abstract class Block {
-	/**
-	 * Blockのテクスチャを取得します.<br>
-	 * サブクラスでこのメソッドを実装するときには,メモリー節約のため,静的フィールド返すようにしてください.
-	 *
-	 * @return Blockのテクスチャ
-	 */
-	public abstract Image getTexture();
+public abstract class Block implements HasImage {
 }
